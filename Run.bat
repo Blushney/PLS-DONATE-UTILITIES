@@ -8,6 +8,13 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
+:check_dependencies
+if not exist "node_modules" (
+    goto extract_dependencies
+) else (
+    goto main_menu
+)
+
 :extract_dependencies
 echo Extracting node_modules.zip...
 powershell -command "Expand-Archive -Path 'node_modules.zip' -DestinationPath '.'"
