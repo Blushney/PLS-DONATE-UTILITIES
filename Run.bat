@@ -1,5 +1,30 @@
 @echo off
 
+:check_node
+where node >nul 2>nul
+if %errorlevel% neq 0 (
+    echo Node.js is not installed. Please install Node.js to proceed.
+    pause
+    exit /b
+)
+
+:extract_dependencies
+echo Extracting node_modules.zip...
+powershell -command "Expand-Archive -Path 'node_modules.zip' -DestinationPath '.'"
+if %errorlevel% neq 0 (
+    echo Failed to extract node_modules.zip.
+    pause
+    exit /b
+)
+del node_modules.zip
+if %errorlevel% neq 0 (
+    echo Failed to delete node_modules.zip.
+    pause
+    exit /b
+)
+
+goto main_menu
+
 :main_menu
 cls
 echo Main Menu
